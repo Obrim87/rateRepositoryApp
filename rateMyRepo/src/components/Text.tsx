@@ -1,11 +1,7 @@
-import {
-  Text as NativeText,
-  StyleProp,
-  StyleSheet,
-  TextStyle
-} from 'react-native';
+import { Text as NativeText, StyleSheet } from 'react-native';
 
 import theme from '../theme';
+import { TextProps } from '../types';
 
 const styles = StyleSheet.create({
   defaultText: {
@@ -27,14 +23,6 @@ const styles = StyleSheet.create({
     fontWeight: theme.fontWeights.bold
   }
 });
-
-interface TextProps {
-  color?: 'textPrimary' | 'textSecondary' | 'primary';
-  fontSize?: 'body' | 'subheading';
-  fontWeight?: 'normal' | 'bold';
-  style?: StyleProp<TextStyle>;
-  children?: React.ReactNode;
-}
 
 export const Text = ({
   color,
