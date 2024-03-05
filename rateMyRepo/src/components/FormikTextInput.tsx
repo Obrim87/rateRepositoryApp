@@ -7,9 +7,10 @@ import theme from '../theme';
 interface FormikTextInputProps {
   name: string;
   placeholder: string;
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<any>) => void;
   secureTextEntry?: boolean;
+  multiline?: boolean;
 }
 
 const FormikTextInput = (props: FormikTextInputProps) => {
@@ -29,6 +30,16 @@ const FormikTextInput = (props: FormikTextInputProps) => {
       shadowRadius: 5,
       borderColor: showError ? theme.colors.error : 'grey',
       borderWidth: 1
+    },
+    multilineTextInput: {
+      height: 150,
+      padding: 15,
+      paddingTop: 15,
+      margin: 10,
+      borderRadius: 3,
+      shadowRadius: 5,
+      borderColor: showError ? theme.colors.error : 'grey',
+      borderWidth: 1
     }
   });
 
@@ -39,8 +50,9 @@ const FormikTextInput = (props: FormikTextInputProps) => {
         onBlur={() => helpers.setTouched(true)}
         value={input.value}
         placeholder={props.placeholder}
-        style={styles.textInput}
+        style={props.multiline ? styles.multilineTextInput : styles.textInput}
         secureTextEntry={props.secureTextEntry ? true : false}
+        multiline={props.multiline}
         //error={meta.error}
       />
       {showError && <Text style={styles.errorText}>{meta.error}</Text>}

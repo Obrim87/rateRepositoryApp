@@ -1,13 +1,22 @@
-import { Image, StyleSheet, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  View,
+  Pressable,
+  Linking,
+  Alert
+} from 'react-native';
 import { Repository } from '../types';
 import { Text } from './Text';
 import theme from '../theme';
 import Statistic from './Statistic';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    padding: 15
+    padding: 15,
+    marginBottom: 10
   },
   details: {
     flexDirection: 'row'
@@ -42,32 +51,80 @@ const styles = StyleSheet.create({
   }
 });
 
-const RepositoryItem = ({ item }: { item: Repository }) => {
+const RepositoryItem = ({
+  item,
+  showGithubButton
+}: {
+  item: Repository;
+  showGithubButton: boolean;
+}) => {
+  const navigate = useNavigate();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.details}>
-        <Image style={styles.tinyLogo} source={{ uri: item.ownerAvatarUrl }} />
-        <View>
-          <Text
-            color='textPrimary'
-            fontWeight='bold'
-            fontSize='subheading'
-            style={styles.separator}>
-            {item.fullName}
-          </Text>
-          <Text color='textPrimary' style={styles.separator}>
-            {item.description}
-          </Text>
-          <Text style={styles.language}>{item.language}</Text>
+    <Pressable
+      onPress={() => {
+        navigate(`/repository/${item.node.id}`);
+      }}>
+      <View style={styles.container} testID='repositoryItem'>
+        <View style={styles.details}>
+          <Image
+            style={styles.tinyLogo}
+            source={{ uri: item.node.ownerAvatarUrl }}
+          />
+          <View style={{ flexShrink: 1 }}>
+            <Text
+              color='textPrimary'
+              fontWeight='bold'
+              fontSize='subheading'
+              style={styles.separator}>
+              {item.node.fullName}
+            </Text>
+            <Text color='textPrimary' style={styles.separator}>
+              {item.node.description}
+            </Text>
+            <Text style={styles.language}>
+              {item.node.language ? item.node.language : 'Unknown'}
+            </Text>
+          </View>
         </View>
+        <View style={styles.stats}>
+          <Statistic title='Stars' count={item.node.stargazersCount} />
+          <Statistic title='Forks' count={item.node.forksCount} />
+          <Statistic title='Reviews' count={item.node.reviewCount} />
+          <Statistic title='Rating' count={item.node.ratingAverage} />
+        </View>
+        {showGithubButton && (
+          <Pressable
+            onPress={async () => {
+              const supported = await Linking.canOpenURL(item.node.url);
+
+              if (supported) {
+                await Linking.openURL(item.node.url);
+              } else {
+                Alert.alert(`Cannot open this URL: ${item.node.url}`);
+              }
+            }}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? 'white' : theme.colors.primary,
+                alignItems: 'center',
+                margin: 10,
+                padding: 15,
+                borderRadius: 3,
+                shadowRadius: 5
+              }
+            ]}>
+            {({ pressed }) => (
+              <Text
+                color={pressed ? 'textPrimary' : 'textSecondary'}
+                fontWeight='bold'>
+                Open in GitHub
+              </Text>
+            )}
+          </Pressable>
+        )}
       </View>
-      <View style={styles.stats}>
-        <Statistic title='Stars' count={item.stargazersCount} />
-        <Statistic title='Forks' count={item.forksCount} />
-        <Statistic title='Reviews' count={item.reviewCount} />
-        <Statistic title='Rating' count={item.ratingAverage} />
-      </View>
-    </View>
+    </Pressable>
   );
 };
 

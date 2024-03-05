@@ -2,7 +2,6 @@ import { FormikErrors } from 'formik';
 import {
   TextInput as NativeTextInput,
   StyleProp,
-  //StyleSheet,
   TextStyle
 } from 'react-native';
 
@@ -17,8 +16,6 @@ interface TextInputProps {
     shouldValidate?: boolean
   ) => Promise<void | FormikErrors<any>>;
 }
-
-//const styles = StyleSheet.create({});
 
 const TextInput = ({
   value,

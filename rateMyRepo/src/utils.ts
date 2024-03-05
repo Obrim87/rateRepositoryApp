@@ -19,3 +19,13 @@ export const numFormatter = (num: number, digits: number) => {
     ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
     : '0';
 };
+
+export const formatDate = (date: string) => {
+  if (!date) return '69-69-0420';
+
+  const year = date.substring(0, 4);
+  const month = date.substring(5, 7);
+  const day = date.substring(8, 10);
+
+  return `${day}.${month}.${year}`;
+};

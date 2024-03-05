@@ -31,6 +31,7 @@
   "typescript.reportStyleChecksAsWarnings": true,
   "cSpell.words": [
     "Arto",
+    "BISH",
     "Bobermien",
     "Clearable",
     "elem",
@@ -44,11 +45,13 @@
     "Malminkaari",
     "Matti",
     "Nallemäentie",
+    "obrim",
     "papayawhip",
     "patientor",
     "Petreska",
     "Pressable",
     "reduxjs",
+    "rneui",
     "Ruuska",
     "Tapiolankatu",
     "Venla"
@@ -66,7 +69,10 @@
     "apos",
     "mobrien",
     "multiplicator",
+    "nent",
     "noreferrer",
+    "repoid",
+    "unimodules",
     "vars"
   ],
   "prettier.enable": true,

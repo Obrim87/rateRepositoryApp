@@ -5,7 +5,11 @@
       "version": "detect"
     }
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended"
+  ],
   "parser": "@babel/eslint-parser",
   "env": {
     "react-native/react-native": true
@@ -19,7 +23,6 @@
     "eqeqeq": "error",
     "no-undef": "off",
     "arrow-spacing": ["error", { "before": true, "after": true }],
-    "no-console": 0,
-    "allowTemplateLiterals": true
+    "no-console": 0
   }
 }
